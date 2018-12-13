@@ -1,0 +1,42 @@
+
+{% extends "pink_base.html" %}
+{% block conent %}
+
+
+<div class="form-group" style="width: 500px; float: left;position: relative;left: 20px;">
+	<div style="margin: 0 auto;">
+		<h3 >添加客户</h3>
+	</div>
+<form action="{{url_for('user.add_cus')}}" method="post">
+	{{ form.hidden_tag() }}
+	{% for message in get_flashed_messages() %}
+    	<p style="color: red;">{{ message }}</p>
+	{% endfor %}
+	<p ><strong>姓名：</strong>{{form.name(class="form-control")}}</p>
+	<p id="phone" ><strong>手机号：</strong>{{form.phone(class="form-control",id="phone_data")}}
+		
+	</p>
+	<p ><strong>项目：</strong>
+
+	<input type="checkbox" name="project" value="一建"/>一建&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" name="project" value="二建"/>二建&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" name="project" value="造价"/>造价&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" name="project" value="消防"/>消防&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" name="project" value="监理"/>监理&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" name="project" value="安全"/>安全&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" name="project" value="学历"/>学历&nbsp;&nbsp;&nbsp;&nbsp;
+
+	</p>
+	<p ><strong>客户类型：</strong>
+		<input type="radio" name="genre" value="已成交"/>已成交&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="genre" value="A类"/>A类&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="genre" value="B类"/>B类&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="genre" value="C类"/>C类&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="genre" value="放弃"/>放弃&nbsp;&nbsp;&nbsp;&nbsp;
+
+	</p>
+	<p ><strong>价格/班次：</strong>{{form.price_banci(class="form-control")}}</p>
+	<input id="sub" type="submit" name="提交" " class="btn btn-primary">
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+
+{% extends "pink_base.html" %}
+{% block conent %}
+{% for message in get_flashed_messages() %}
+    	<p>{{ message }}</p>
+{% endfor %}
+<form action="{{url_for('pink.psw')}}" method="post">
+	{{ form.hidden_tag() }}
+	<p>旧密码：{{form.old_psw(size=32)}}</p>
+	<p>设置密码：{{form.new_psw(size=32)}}</p>
+	<p>确认密码：{{form.re_psw(size=32)}}</p>
+	<input type="submit" name="修改">
+</form>
+{% endblock %}

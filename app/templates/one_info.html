@@ -1,0 +1,65 @@
+{% extends "pink_base.html" %}
+{% block conent %}
+
+<style type="text/css">
+	th{
+		width: 150px;
+		text-align:center;
+		vertical-align: middle;
+	}
+	td{
+		width: 150px;
+		word-break: break-word;
+		text-align:center;
+		vertical-align: middle;
+	}
+</style>
+
+
+
+<div style="float: left;position: relative; left: 20px;" class="form-group">
+	<div style="margin: 0 auto;">
+		<h3 >添加客户</h3>
+	</div>
+	
+
+	<table class="table">
+		<tr>
+			<th>姓名</th>
+			<th>手机号</th>
+			<th>项目</th>
+		</tr>
+		<tr>
+			<td><strong>{{customer.c_name}}</strong></td>
+			<td><strong id="phone" onclick="getphone(this,{{customer.phone}})" onmouseout="hidephone(this)">********</strong></td>
+			<td><strong>{{customer.project}}</strong></td>
+		</tr>
+	</table>
+	<form action="{{url_for('user.save_reset_cus_1',id = customer.id,search_d = search_d)}}" method="post" class="form-inline" >
+	{{ form.hidden_tag() }}
+	
+	
+	<div class="form-group"><p>客户类型：</p>{{form.c_type(class="form-control")}}</div>
+	<div class="form-group"><p>价格/班次：</p>{{form.price_banci(value=customer.price_banci,class="form-control")}}</div>
+	<button type="submit" id="save" onclick="getphone({{customer.phone}})" class="btn btn-default" style="position:relative;top:15px;">保存</button>
+</form>
+<form action="{{url_for('user.save_cus_info_1',id = customer.id,search_d = search_d)}}" method="post" style="width: 500px;">
+	<p>动态：</p>
+	<textarea name="sale_dongtai" cols="70" rows="3" class="form-control" class="form-control"></textarea>
+	<p>下通电话思路：</p>
+	<textarea name="sale_nextphone" cols="70" rows="3" class="form-control" class="form-control"></textarea>
+	<p><input type="submit" name="发布" value="发布" class="btn btn-primary"></p>
+</form>
+
+</div>
+	
+<script type="text/javascript">
+  function getphone(id,i){
+    id.innerHTML=i;
+  }
+  function hidephone(id){
+   id.innerHTML="********";
+  }
+</script>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+
+{% extends "pink_base.html" %}
+{% block conent %}
+{% for message in get_flashed_messages() %}
+    	<p>{{ message }}</p>
+{% endfor %}
+<form action="{{url_for('user.psw')}}" method="post">
+	{{ form.hidden_tag() }}
+	<p>旧密码：{{form.old_psw(size=32)}}</p>
+	<p id="new" onfocus="checkpass(this)">设置密码：{{form.new_psw(size=32)}}<a id="look" style="color: red;display: none;">密码强度过低</a></p>
+	<p >确认密码：{{form.re_psw(size=32)}}</p>
+	<input type="submit" name="修改">
+</form>
+<script type="text/javascript">
+	function checkpass(id){
+		var pass = document.getElementById(id).innerHTML;
+		if (pass.length<6 || pass.length>12){
+			document.getElementById('look').style.cssText = "color: red;";
+		}
+	}
+</script>
+{% endblock %}

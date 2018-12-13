@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            品控系统
+        </title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="/static/css/x-admin.css" media="all">
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <script src="/static/js/jquery.min.js"></script>
+    </head>
+    <body >
+        <div class="layui-layout layui-layout-admin" style="overflow-x: hidden;height: 750px;" >
+            <div class="layui-header header header-demo" style="top: 0px;position: fixed;width: 100%;overflow-y: auto;">
+                <div class="layui-main">
+                    <a class="logo" href="./index.html">
+                    </a>
+                    <ul class="layui-nav" lay-filter="">
+                      <li class="layui-nav-item"><img src="/static/images/logo.png" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
+                      <li class="layui-nav-item">
+                        <a href="javascript:;">{{username}}</a>
+                        <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                          <dd><a href="{{url_for('pink.saleman_reset')}}">修改密码</a></dd>
+                          <dd><a href="{{url_for('user.saleman_logout')}}">退出</a></dd>
+                        </dl>
+                      </li>
+                      <li class="layui-nav-item x-index"><a></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="layui-side layui-bg-black x-side">
+                <div class="layui-side-scroll">
+                    <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="{{url_for('user.saleman_index',city='全部')}}">
+                                <cite>首页</cite>
+                            </a>
+                        </li>
+                         <li class="layui-nav-item">
+                            <a class="javascript:;" href="{{url_for('user.add_cus_form')}}">
+                                <cite>业务添加客户</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="{{url_for('user.search_index')}}">
+                                <cite>业务查询客户</cite>
+                            </a>
+                        </li>
+                         <li class="layui-nav-item">
+                            <a class="javascript:;" href="{{url_for('pink.pink_index')}}">
+                                <cite>质检查询</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="{{url_for('cf_pink.chengjiao')}}">
+                                <cite>已成交或放弃</cite>
+                            </a>
+                        </li>
+                         <li class="layui-nav-item">
+                            <a class="javascript:;" href="{{url_for('zy_pink.zhuanyi')}}">
+                                <cite>客户转移</cite>
+                            </a>
+                        </li>
+                       
+                       
+                    </ul>
+                </div>
+
+            </div>
+            <div style="position: relative;left: 200px;top: 60px; ">
+                {% block conent %}{% endblock %}
+                
+        </div>
+        <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="/static/js/x-admin.js"></script>
+        
+    </body>
+</html>

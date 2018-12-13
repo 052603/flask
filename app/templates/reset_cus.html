@@ -1,0 +1,87 @@
+{% extends "pink_base.html" %}
+{% block conent %}
+<style type="text/css">
+	th{
+		width: 150px;
+		text-align:center;
+		vertical-align: middle;
+	}
+	td{
+		width: 150px;
+		word-break: break-word;
+		text-align:center;
+		vertical-align: middle;
+	}
+</style>
+
+
+
+<div style="float: left;position: relative; left: 20px;" class="form-group">
+	<table class="table">
+    <tr>
+      <th>姓名</th>
+      <th>手机号</th>
+      <th>项目</th>
+    </tr>
+    <tr>
+      <td><strong>{{customer.c_name}}</strong></td>
+      <td><strong id="phone" onclick="getphone(this,{{customer.phone}})" onmouseout="hidephone(this)">********</strong></td>
+      <td><strong>{{customer.project}}</strong></td>
+    </tr>
+  </table>
+	<form action="{{url_for('user.save_reset_cus_1',id = customer.id,search_d = search_d)}}" method="post" class="form-inline" >
+	{{ form1.hidden_tag() }}
+	<div class="form-group"><p>客户类型：</p>{{form1.c_type(class="form-control")}}</div>
+	<div class="form-group"><p>价格/班次：</p>{{form1.price_banci(value=customer.price_banci,class="form-control")}}</div>
+	<button type="submit" id="save" onclick="getphone({{customer.phone}})" class="btn btn-default" style="position:relative;top:15px;">保存</button>
+</form>
+<form action="{{url_for('user.save_cus_info_1',id = customer.id,search_d = search_d)}}" method="post" style="width: 500px;">
+	<p>动态：</p>
+	<textarea name="sale_dongtai" cols="70" rows="3" class="form-control" class="form-control"></textarea>
+	<p>下通电话思路：</p>
+	<textarea name="sale_nextphone" cols="70" rows="3" class="form-control" class="form-control"></textarea>
+	<p><input type="submit" name="发布" value="发布" class="btn btn-primary"></p>
+</form>
+
+<div style="width: 850px;">
+{%for info in sale_cus_info%}
+<div>
+	<a class="list-group" style="position: relative;left: 300px;">{{info.date_time}}</a>
+	<a class="list-group">
+		<a class="list-group-item">
+    	<h4 class="list-group-item-heading">动态</h4>
+    	<p class="list-group-item-text">{{info.dongtai}}</p>
+  		</a>
+	</a>
+	<a class="list-group">
+ 		<a  class="list-group-item">
+    	<h4 class="list-group-item-heading">下通电话思路</h4>
+    	<p class="list-group-item-text">{{info.next_phone}}</p>
+  		</a>
+	</a>
+	<a class="list-group">
+  		<a  class="list-group-item">
+    	<h4 class="list-group-item-heading">质检</h4>
+    	{%if info.info%}
+    		<p class="list-group-item-text">{{info.info}}</p>
+    	{%else%}
+    		<p class="list-group-item-text">未审阅</p>
+    	{%endif%}
+  		</a>
+	</a>
+</div>
+{%endfor%}
+
+
+</div>
+	</div>
+<script type="text/javascript">
+  function hidephone(){
+    document.getElementById("phone").type = "password";
+  }
+  function getphone(phone){
+  	document.getElementById("phone").type = "text";
+  }
+</script>
+
+{% endblock %}

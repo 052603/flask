@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>登录</title>
+<link href="/static/css/login.css" rel="stylesheet" rev="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="/static/js/jQuery1.7.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery1.42.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.SuperSlide.js"></script>
+<script type="text/javascript" src="/static/js/Validform_v5.3.2_min.js"></script>
+
+
+<script type="text/javascript">
+$(function(){
+	$(".screenbg ul li").each(function(){
+		$(this).css("opacity","0");
+	});
+	$(".screenbg ul li:first").css("opacity","1");
+	var index = 0;
+	var t;
+	var li = $(".screenbg ul li");	
+	var number = li.size();
+	function change(index){
+		li.css("visibility","visible");
+		li.eq(index).siblings().animate({opacity:0},3000);
+		li.eq(index).animate({opacity:1},3000);
+	}
+	function show(){
+		index = index + 1;
+		if(index<=number-1){
+			change(index);
+		}else{
+			index = 0;
+			change(index);
+		}
+	}
+	t = setInterval(show,8000);
+	//根据窗口宽度生成图片宽度
+	var width = $(window).width();
+	$(".screenbg ul img").css("width",width+"px");
+});
+</script>
+</head>
+
+<body>
+<div id="tab">
+ 
+  <div class="tab_box"> 
+    
+   <!-- 业务登录开始-->
+    <div>
+     <div class="tea_error_box"></div>
+    {% for message in get_flashed_messages() %}
+    	<p>{{ message }}</p>
+	{% endfor %}
+      <form action="{{url_for('user.saleman_login')}}" method="post" class="tea_login_error">
+      	{{ form.hidden_tag() }}
+        <div id="username">
+          <label>帐&nbsp;&nbsp;&nbsp;号：</label>
+          {{ form.username(size=32) }}
+          <!--ajaxurl="demo/valid.jsp"--> 
+        </div>
+        <div id="password">
+          <label>密&nbsp;&nbsp;&nbsp;码：</label>
+          {{ form.password(size=32) }}
+        </div>
+        
+        
+        <div id="login">
+          {{ form.submit() }}
+        </div>
+      </form>
+    </div>
+     <!-- 业务登录结束-->
+    
+
+
+</body>
+</html>

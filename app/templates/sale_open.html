@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            X-admin v1.0
+        </title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="/static/css/x-admin.css" media="all">
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <script src="/static/js/x-admin.js"></script>
+        <script src="/static/js/jquery.min.js"></script>
+    </head>
+    <body >
+
+<style type="text/css">
+  th{
+    width: 150px;
+    text-align:center;
+    vertical-align: middle;
+  }
+  td{
+    width: 150px;
+    word-break: break-word;
+    text-align:center;
+    vertical-align: middle;
+  }
+
+</style>
+
+
+<div style="margin: 0 auto;width: 650px;" class="form-group">
+  <table class="table">
+    <tr>
+      <th>姓名</th>
+      <th>手机号</th>
+      <th>项目</th>
+    </tr>
+    <tr>
+      <form action="{{url_for('user.save_reset_cus',id = customer.id,search_d = search_d)}}" method="post" class="form-inline" style="float: left;position: relative;width: 350px;">
+      <td><strong>{{form1.name(value=customer.c_name,style="width:100px;")}}</strong></td>
+      <td id="phone"><strong id="shouji" onclick="getphone({{customer.id}})" >********</strong></td>
+      <td><strong>{{customer.project}}</strong></td>
+    </tr>
+  </table>
+
+  {{ form1.hidden_tag() }}
+  <p>
+  <div class="form-group" style="width: 100px;position: absolute;float:left;">客户类型：{{form1.c_type(class="form-control",style="width:100px;")}}</div>
+  <div class="form-group" style="width: 100px;position: absolute;left: 180px;">价格/班次：{{form1.price_banci(value=customer.price_banci,class="form-control",style="width:100px;")}}</div>
+  <button type="submit" id="save"  class="btn btn-default" style="position: absolute;left: 300px;top:115px;background-color: green">保存</button>
+  </p>
+</form>
+<div style="float: right;position: relative;width: 300px;">
+  {%for i in old_act%}
+  <p>
+  {{i.date_time|time_split}}
+  {{i.old_genre}}
+  {{i.old_banci}}
+  </p>
+  {%endfor%}
+</div>
+</div>
+
+<div style="width: 600px;margin: 0 auto;  position: relative;top: 80px;">
+  <form action="{{url_for('user.save_cus_info',id = customer.id,search_d = search_d)}}" method="post" style="width: 500px;margin: 0 auto;">
+  <div> 
+        <textarea name="sale_dongtai" cols="70" rows="3" class="form-control" class="form-control" style="resize: none;" placeholder="动态"></textarea>
+  </div>
+<br>
+<div >
+        <textarea name="sale_nextphone" cols="70" rows="3" class="form-control" class="form-control" style="resize: none;" placeholder="下一通电话思路"></textarea>
+ </div>
+  
+  <p><input type="submit" name="发布" value="发布" class="btn btn-primary"></p>
+</form>
+</div>
+
+
+<div style="width: 600px;margin: 0 auto; position: relative;top: 100px;" >
+{%for info in sale_cus_info%}
+<div >
+  <a class="list-group" style="position: relative;left: 250px;background-color: #84C1FF;">{{info.date_time}}</a>
+  <a class="list-group">
+    <a class="list-group-item active">
+      {%if info.sale_name%}
+      <h4 class="list-group-item-heading">动态({{info.sale_name}})</h4>
+      {%else%}
+      <h4 class="list-group-item-heading">动态</h4>
+      {%endif%}
+      <p class="list-group-item-text">{{info.dongtai}}</p>
+      </a>
+  </a>
+  <a class="list-group">
+    <a  class="list-group-item active">
+     {%if info.sale_name%}
+      <h4 class="list-group-item-heading">下通电话思路({{info.sale_name}})</h4>
+      {%else%}
+      <h4 class="list-group-item-heading">下通电话思路</h4>
+      {%endif%}
+      <p class="list-group-item-text">{{info.next_phone}}</p>
+      </a>
+  </a>
+  <a class="list-group">
+      <a  class="list-group-item active">
+       {%if info.pink%}
+      <h4 class="list-group-item-heading">质检({{info.pink}})</h4>
+      {%else%}
+      <h4 class="list-group-item-heading">质检</h4>
+      {%endif%}
+      {%if info.info%}
+        <p class="list-group-item-text">{{info.info}}</p>
+      {%else%}
+        <p class="list-group-item-text">未审阅</p>
+      {%endif%}
+      </a>
+      {%for c in comments%}
+    {%if c.info_id == info.id%}
+  <a class="list-group">
+    <a  class="list-group-item  active">
+      <p class="list-group-item-text">{{c.name}}:{{c.comment}}------{{c.date_time|time_split}}</p>
+      </a>
+      </a>      {%endif%}
+    {%endfor%} 
+  </a>
+</div>
+{%endfor%}
+
+
+</div>
+  </div>
+<script type="text/javascript">
+  
+  function getphone(id){
+    var t = document.getElementById('shouji').innerHTML;
+    if (t=='********'){
+      var r_url = '/user/log_record/'+id.toString();
+    $.ajax({url:r_url
+      ,success:function(data){
+        // var data_s = JSON.stringify(data)
+        $('#shouji').text(data.phone);
+      }});
+    // id.innerHTML=data.phone;
+    }
+    
+    
+  }
+  
+</script>
+
+</body>
+</html>
+
+
+
